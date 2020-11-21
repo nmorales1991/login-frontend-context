@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import Header from "../components/Header";
 import AuthGlobal from "../context/store/AuthGlobal";
-import {Table,Tbody,Thead,Td,Th} from './styles'
+import {Table,Tbody,Thead,Td,Th} from '../styles/styles'
 
 export default function Dashboard(props) {
     const context = useContext(AuthGlobal);

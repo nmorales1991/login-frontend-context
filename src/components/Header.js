@@ -8,7 +8,7 @@ import {
     Button,
     EndWrapper,
     EndNav
-} from "./Header-styles";
+} from "../styles/Header-styles";
 import AuthGlobal from "../context/store/AuthGlobal";
 import { logoutUser } from "../context/actions/autenticacion.action";
 

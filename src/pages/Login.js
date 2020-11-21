@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import { Center, Form, H1, WrappLogin, Input, Button } from "./styles";
+import { Center, Form, H1, WrappLogin, Input, Button } from "../styles/styles";
 import AuthGlobal from "../context/store/AuthGlobal";
 import { loginUser } from "../context/actions/autenticacion.action";
 import Error from "../components/Error";
