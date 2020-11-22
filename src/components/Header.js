@@ -8,8 +8,8 @@ import {
     Button,
     EndWrapper,
     EndNav
-} from "./Header-styles";
-import AuthGlobal from "../context/store/AuthGlobal";
+} from "../styles/Header-styles";
+import {AuthGlobal} from "../context/store/Auth";
 import { logoutUser } from "../context/actions/autenticacion.action";
 
 export default function Header() {
