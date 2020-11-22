@@ -1,58 +1,62 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
-import AuthGlobal from "../context/store/AuthGlobal";
-import {Table,Tbody,Thead,Td,Th} from '../styles/styles'
+import { Table, Tbody, Thead, Td, Th } from "../styles/styles";
 
-export default function Dashboard(props) {
-    const context = useContext(AuthGlobal);
-    const [showChild, setShowChild] = useState(false);
-    const [usuarios, setUsuarios] = useState([])
+const Dashboard = () => {
 
-    useEffect(() => {
-        if (
-            context.stateUser.isAuthenticated === false ||
-            context.stateUser.isAuthenticated === null
-        ) {
-            props.history.push("/login");
-        }
-        setShowChild(true);
+  const [usuarios, setUsuarios] = useState([]);
 
-        const jwt = localStorage.getItem("jwt");
-        if (jwt) {
-            fetch("http://localhost:3001/server/usuarios", {
-                method: "GET",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    Authorization: jwt
-                }
-            })
-                .then(res => res.json())
-                .then(data => {
-                    setUsuarios(data.usuarios)
-                })
-                .catch(err => {
-                    console.log(err);
-                });
-        }
-    }, [context.stateUser.isAuthenticated, props.history]);
-
-    if (!showChild) {
-        return null;
-    } else {
-        return (
-            <div>
-                <Header />
-                {usuarios?
-                <Table>
-                    <Thead><tr><Th>Nombre</Th><Th>Correo</Th></tr></Thead>
-                <Tbody>{usuarios.map((usuario,index)=>{
-                    return(
-                <tr key={index}><Td>{usuario.nombre}</Td><Td>{usuario.correo}</Td></tr>
-                    )
-                })}</Tbody>
-                </Table>:null}
-            </div>
-        );
+  const getUsuarios = () => {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      fetch("http://localhost:3001/server/usuarios", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: jwt,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setUsuarios(data.usuarios);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
+  };
+
+
+  useEffect(() => {
+    getUsuarios();
+  }, []);
+
+  return (
+    <div>
+      <Header />
+      {usuarios ? (
+        <Table>
+          <Thead>
+            <tr>
+              <Th>Nombre</Th>
+              <Th>Correo</Th>
+            </tr>
+          </Thead>
+          <Tbody>
+            {usuarios.map((usuario, index) => {
+              return (
+                <tr key={index}>
+                  <Td>{usuario.nombre}</Td>
+                  <Td>{usuario.correo}</Td>
+                </tr>
+              );
+            })}
+          </Tbody>
+        </Table>
+      ) : null}
+    </div>
+  );
 }
+
+export default Dashboard

@@ -1,38 +1,37 @@
-import React, { useReducer, useEffect,useState } from "react";
+import React, { useReducer } from "react";
 import authReducer from "../reducers/autenticacion.reducer";
 import { setCurrentUser } from "../actions/autenticacion.action";
-import AuthGlobal from "./AuthGlobal";
 import jwt_decode from "jwt-decode";
 
-const Auth = props => {
-    const [stateUser, dispatch] = useReducer(authReducer, {
-        isAuthenticated: null,
-        user: {}
-    });
-    const [showChild, setShowChild] = useState(false);
+export const AuthGlobal = React.createContext();
 
-    useEffect(() => {
-        if (localStorage.jwt) {
-            const decoded = localStorage.jwt ? localStorage.jwt : "";
-            dispatch(setCurrentUser(jwt_decode(decoded))); 
-        }
-        setShowChild(true);
-    }, []); 
+let initialState = {
+  isAuthenticated: false,
+  user: {},
+};
 
-    if (!showChild) {
-        return null;
-    } else {
-        return (
-            <AuthGlobal.Provider
-                value={{
-                    stateUser,
-                    dispatch
-                }}
-            >
-                {props.children}
-            </AuthGlobal.Provider>
-        );
-    }
+const Auth = (props) => {
+  if (localStorage.jwt) {
+    initialState.isAuthenticated = true;
+    initialState.user = jwt_decode(localStorage.jwt);
+  }
+  const [stateUser, dispatch] = useReducer(authReducer, initialState);
+  
+  if (localStorage.jwt && stateUser.isAuthenticated === false) {
+    const userToken = localStorage.jwt ? localStorage.jwt : "";
+    dispatch(setCurrentUser(jwt_decode(userToken)));
+  }
+
+  return (
+    <AuthGlobal.Provider
+      value={{
+        stateUser,
+        dispatch,
+      }}
+    >
+      {props.children}
+    </AuthGlobal.Provider>
+  );
 };
 
 export default Auth;

@@ -9,7 +9,7 @@ import {
     EndWrapper,
     EndNav
 } from "../styles/Header-styles";
-import AuthGlobal from "../context/store/AuthGlobal";
+import {AuthGlobal} from "../context/store/Auth";
 import { logoutUser } from "../context/actions/autenticacion.action";
 
 export default function Header() {
