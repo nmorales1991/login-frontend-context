@@ -4,7 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import Saludo from "./Saludo";
 import Otro from "../../pages/Otro";
 import Error from "../../pages/Error";
-import SaludoPage from "../../pages/Saludo";
+import SaludoPage from "../../pages/saludo/Saludo";
 
 const WrappedRoutes = () => (
   <Switch>

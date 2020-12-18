@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import Hola from '../../pages/Hola'
-import Chao from '../../pages/Chao'
+import Hola from '../../pages/saludo/Hola'
+import Chao from '../../pages/saludo/Chao'
 import Error from '../../pages/Error'
 
 const Saludo =  () => (
